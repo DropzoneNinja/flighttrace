@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="FlightTrace Test" xmlns="http://www.topografix.com/GPX/1/1">
+  <metadata>
+    <name>Sample Flight Test</name>
+    <desc>A simple test flight for FlightTrace</desc>
+  </metadata>
+  <trk>
+    <name>Morning Flight</name>
+    <desc>Test flight over San Francisco</desc>
+    <type>flying</type>
+    <trkseg>
+      <trkpt lat="37.7749" lon="-122.4194">
+        <ele>100.0</ele>
+        <time>2024-01-01T12:00:00Z</time>
+      </trkpt>
+      <trkpt lat="37.7750" lon="-122.4195">
+        <ele>110.0</ele>
+        <time>2024-01-01T12:00:10Z</time>
+        <speed>5.0</speed>
+      </trkpt>
+      <trkpt lat="37.7751" lon="-122.4196">
+        <ele>120.0</ele>
+        <time>2024-01-01T12:00:20Z</time>
+        <speed>6.0</speed>
+      </trkpt>
+      <trkpt lat="37.7752" lon="-122.4197">
+        <ele>125.0</ele>
+        <time>2024-01-01T12:00:30Z</time>
+        <speed>7.0</speed>
+      </trkpt>
+      <trkpt lat="37.7753" lon="-122.4198">
+        <ele>130.0</ele>
+        <time>2024-01-01T12:00:40Z</time>
+        <speed>8.0</speed>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

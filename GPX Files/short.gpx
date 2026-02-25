@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx xmlns:gaggle="https://www.flygaggle.com/gpx/1/0" xmlns:ns3="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:ns2="http://www.garmin.com/xmlschemas/GpxExtensions/v3" version="1.0.0" creator="https://flygaggle.com">
+  <metadata>
+    <name>Barn Swallow - 17 Feb 2026 07:39 tt</name>
+    <desc></desc>
+    <author>
+      <name>Barn Swallow</name>
+    </author>
+    <time>2026-02-16T20:39:21.782355Z</time>
+    <bounds minlat="-36.208292725070095" minlon="147.05960281600034" maxlat="-36.22196163413663" maxlon="147.07758730164036"/>
+    <extensions>
+      <gaggle:version>1.72.20260210</gaggle:version>
+      <gaggle:wing>Apco EZ2</gaggle:wing>
+      <gaggle:engine>Cosmos 300</gaggle:engine>
+      <gaggle:pilotName>Barn Swallow</gaggle:pilotName>
+      <gaggle:takeoffDate>2026-02-17 07:39:21.782355</gaggle:takeoffDate>
+      <gaggle:landingDate>2026-02-16 20:45:22.000Z</gaggle:landingDate>
+      <gaggle:distance>4.7 km</gaggle:distance>
+      <gaggle:duration>00:07</gaggle:duration>
+      <gaggle:maxSpeed>69 km/h</gaggle:maxSpeed>
+      <gaggle:averageSpeed>35 km/h</gaggle:averageSpeed>
+      <gaggle:maxAltitude>1018 ft</gaggle:maxAltitude>
+      <gaggle:maxClimb>1.8 m/s</gaggle:maxClimb>
+      <gaggle:maxSink>-2.3 m/s</gaggle:maxSink>
+      <gaggle:maxGForce>2.1</gaggle:maxGForce>
+      <gaggle:fuelConsumed>0.9 l</gaggle:fuelConsumed>
+      <ns3:TrackPointExtension/>
+    </extensions>
+  </metadata>
+  <wpt lat="-36.21876534826917" lon="147.0679762902209">
+    <time>2026-02-16T20:37:22.999Z</time>
+    <ele>189.4</ele>
+    <magvar>-1.0</magvar>
+    <name>Takeoff</name>
+    <desc><![CDATA[<table width=300px><tr><td>Takeoff:</td><td>2026-02-17 07:37:22.999</td></tr><tr><td>Landing:</td><td>2026-02-17 07:45:22.000</td></tr></table><h2>Flight statistics:</h2><table><tr><td>Maximum altitude:</td><td>1018 ft</td></tr><tr><td>Maximum speed:</td><td>69 km/h</td></tr><tr><td>Average speed:</td><td>35 km/h</td></tr><tr><td>Distance traveled:</td><td>4.7 km</td></tr><tr><td>Maximum vario:</td><td>1.8 m/s</td></tr><tr><td>Minimum vario:</td><td>-2.3 m/s</td></tr><tr><td>Flight duration:</td><td>00:07</td></tr><tr><td>Fuel consumption:</td><td>0.9 l</td></tr><tr><td>Max G-Force:</td><td>2.1</td></tr></table><hr><h2>Track created by Gaggle Flight Recorder</h2></table>]]></desc>
+    <extensions>
+      <gaggle:speed>0.000</gaggle:speed>
+      <gaggle:gForce>0.000</gaggle:gForce>
+      <ns3:TrackPointExtension>
+        <ns3:speed>0.000</ns3:speed>
+      </ns3:TrackPointExtension>
+    </extensions>
+  </wpt>
+  <wpt lat="-36.21851165970273" lon="147.06779007712217">
+    <time>2026-02-16T20:45:22.000Z</time>
+    <ele>189.1</ele>
+    <magvar>163.6</magvar>
+    <name>Landing</name>
+    <desc></desc>
+    <extensions>
+      <gaggle:speed>0.000</gaggle:speed>
+      <gaggle:gForce>0.000</gaggle:gForce>
+      <ns3:TrackPointExtension>
+        <ns3:speed>0.000</ns3:speed>
+      </ns3:TrackPointExtension>
+    </extensions>
+  </wpt>
+  <trk>
+    <name>Barn Swallow</name>
+    <desc></desc>
+    <type>Flight</type>
+    <src>Gaggle - Flight Recorder</src>
+    <number>1</number>
+    <trkseg>
+      <trkpt lat="-36.21876534826917" lon="147.0679762902209">
+        <time>2026-02-16T20:37:22.999Z</time>
+        <ele>189.4</ele>
+        <magvar>-1.0</magvar>
+        <desc></desc>
+        <extensions>
+          <gaggle:speed>0.000</gaggle:speed>
+          <gaggle:climbRate>0.000</gaggle:climbRate>
+          <gaggle:agl>0.000</gaggle:agl>
+          <gaggle:gForce>0.000</gaggle:gForce>
+          <ns3:TrackPointExtension>
+            <ns3:speed>0.000</ns3:speed>
+          </ns3:TrackPointExtension>
+        </extensions>
+      </trkpt>
+      <trkpt lat="-36.218764679449905" lon="147.0679762902209">
+        <time>2026-02-16T20:37:23.999Z</time>
+        <ele>189.3</ele>
+        <magvar>-1.0</magvar>
+        <desc></desc>
+        <extensions>
+          <gaggle:speed>0.000</gaggle:speed>
+          <gaggle:climbRate>0.000</gaggle:climbRate>
+          <gaggle:agl>0.000</gaggle:agl>
+          <gaggle:gForce>0.000</gaggle:gForce>
+          <ns3:TrackPointExtension>
+            <ns3:speed>0.000</ns3:speed>
+          </ns3:TrackPointExtension>
+        </extensions>
+      </trkpt>
+      <trkpt lat="-36.218764679449905" lon="147.0679762902209">
+        <time>2026-02-16T20:37:24.999Z</time>
+        <ele>189.3</ele>
+        <magvar>-1.0</magvar>
+        <desc></desc>
+        <extensions>
+          <gaggle:speed>0.000</gaggle:speed>
+          <gaggle:climbRate>0.000</gaggle:climbRate>
+          <gaggle:agl>0.000</gaggle:agl>
+          <gaggle:gForce>0.000</gaggle:gForce>
+          <ns3:TrackPointExtension>
+            <ns3:speed>0.000</ns3:speed>
+          </ns3:TrackPointExtension>
+        </extensions>
+      </trkpt>
+      <trkpt lat="-36.2187649077927" lon="147.06797658684877">
+        <time>2026-02-16T20:37:25.999Z</time>
+        <ele>189.2</ele>
+        <magvar>-1.0</magvar>
+        <desc></desc>
+        <extensions>
+          <gaggle:speed>0.000</gaggle:speed>
+          <gaggle:climbRate>0.000</gaggle:climbRate>
+          <gaggle:agl>0.000</gaggle:agl>
+          <gaggle:gForce>0.000</gaggle:gForce>
+          <ns3:TrackPointExtension>
+            <ns3:speed>0.000</ns3:speed>
+          </ns3:TrackPointExtension>
+        </extensions>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>
+
