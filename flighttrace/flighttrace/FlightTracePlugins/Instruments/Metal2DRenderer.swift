@@ -41,9 +41,8 @@ final class Metal2DRenderer: @unchecked Sendable {
     private var textureCache: [String: MTLTexture] = [:]
     private let textureCacheLock = NSLock()
     private static let resourceBundle: Bundle = {
-        // In Xcode app target (non-SPM), Bundle.module is unavailable.
-        // Use the main bundle for resources.
-        Bundle.main
+        // Use the framework bundle when this code lives in a framework target.
+        Bundle(for: Metal2DRenderer.self)
     }()
 
     private init(device: MTLDevice) {

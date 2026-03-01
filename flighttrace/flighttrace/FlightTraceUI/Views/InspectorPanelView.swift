@@ -78,9 +78,13 @@ public struct InspectorPanelView: View {
             }
         }
         .frame(minWidth: 250, idealWidth: 300, maxWidth: 400)
-        .highPriorityGesture(TapGesture().onEnded {
-            print("[Inspector] Root tap gesture")
-            activateApp()
+        .simultaneousGesture(TapGesture().onEnded {
+            #if canImport(AppKit)
+            if !NSApp.isActive {
+                print("[Inspector] Root tap gesture (activating)")
+                activateApp()
+            }
+            #endif
         })
         .onAppear {
             #if canImport(AppKit)
@@ -404,6 +408,7 @@ public struct InspectorPanelView: View {
             Toggle(label ?? key, isOn: Binding(
                 get: { value },
                 set: { newValue in
+                    print("🔍 InspectorPanel: toggle '\(key)' -> \(newValue)")
                     viewModel.updateInstrumentConfigurationProperty(
                         instrumentID: instrument.id,
                         pluginID: instrument.pluginID,
@@ -737,4 +742,3 @@ private struct DoubleInputField: View {
         }
     }
 }
-

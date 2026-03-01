@@ -21,6 +21,12 @@ public enum MinimapStyle: String, Sendable, Codable, CaseIterable, Equatable {
     case simple = "Simple"
 }
 
+/// Units for minimap scale bar
+public enum MinimapScaleUnits: String, Sendable, Codable, CaseIterable, Equatable {
+    case metric = "Metric"
+    case imperial = "Imperial"
+}
+
 // MARK: - Minimap Configuration
 
 /// Configuration for the Minimap instrument
@@ -28,7 +34,7 @@ public struct MinimapConfiguration: InstrumentConfiguration, Codable {
     public var id = UUID()
 
     /// Map display style
-    public var style: MinimapStyle = .simple
+    public var style: MinimapStyle = .standard
 
     /// Zoom level (higher = more zoomed in)
     public var zoomLevel: Double = 1.0
@@ -63,8 +69,23 @@ public struct MinimapConfiguration: InstrumentConfiguration, Codable {
     /// Whether to show heading indicator
     public var showHeading: Bool = true
 
-    /// Whether to show scale bar
-    public var showScale: Bool = true
+    /// Scale bar distance in meters
+    public var scaleDistanceMeters: Double = 1000.0
+
+    /// Automatically choose a readable scale distance
+    public var autoScaleDistance: Bool = true
+
+    /// Units for scale label
+    public var scaleUnits: MinimapScaleUnits = .metric
+
+    /// Whether to show the scale line
+    public var showScaleLine: Bool = true
+
+    /// Color for the scale line
+    public var scaleLineColor: SerializableColor = .white
+
+    /// Whether to show the scale label
+    public var showScaleLabel: Bool = true
 
     /// Corner radius for the background
     public var cornerRadius: Double = 8.0
@@ -153,10 +174,37 @@ public struct MinimapConfiguration: InstrumentConfiguration, Codable {
                 value: showHeading,
                 label: "Show Heading"
             ),
+            .double(
+                key: "scaleDistanceMeters",
+                value: scaleDistanceMeters,
+                range: 100.0...5000.0,
+                label: "Scale Distance (m)"
+            ),
             .boolean(
-                key: "showScale",
-                value: showScale,
-                label: "Show Scale Bar"
+                key: "autoScaleDistance",
+                value: autoScaleDistance,
+                label: "Auto Scale Distance"
+            ),
+            .enumeration(
+                key: "scaleUnits",
+                value: scaleUnits,
+                options: MinimapScaleUnits.allCases,
+                label: "Scale Units"
+            ),
+            .boolean(
+                key: "showScaleLine",
+                value: showScaleLine,
+                label: "Show Scale Line"
+            ),
+            .color(
+                key: "scaleLineColor",
+                value: scaleLineColor,
+                label: "Scale Line Color"
+            ),
+            .boolean(
+                key: "showScaleLabel",
+                value: showScaleLabel,
+                label: "Show Scale Label"
             ),
             .boolean(
                 key: "showGrid",
@@ -177,6 +225,7 @@ public struct MinimapConfiguration: InstrumentConfiguration, Codable {
 
     public func updatingProperty(key: String, value: Any) -> MinimapConfiguration? {
         var updated = self
+        print("🔍 MinimapConfiguration: update '\(key)' = \(value)")
 
         switch key {
         case "style":
@@ -232,9 +281,34 @@ public struct MinimapConfiguration: InstrumentConfiguration, Codable {
             if let boolValue = value as? Bool {
                 updated.showHeading = boolValue
             }
-        case "showScale":
+        case "scaleDistanceMeters":
+            if let doubleValue = value as? Double {
+                updated.scaleDistanceMeters = max(1.0, doubleValue)
+            }
+        case "autoScaleDistance":
             if let boolValue = value as? Bool {
-                updated.showScale = boolValue
+                updated.autoScaleDistance = boolValue
+            }
+        case "scaleUnits":
+            if let enumValue = value as? MinimapScaleUnits {
+                updated.scaleUnits = enumValue
+            } else if let stringValue = value as? String {
+                let normalized = stringValue.lowercased()
+                if let unit = MinimapScaleUnits.allCases.first(where: { $0.rawValue.lowercased() == normalized || String(describing: $0).lowercased() == normalized }) {
+                    updated.scaleUnits = unit
+                }
+            }
+        case "showScaleLine":
+            if let boolValue = value as? Bool {
+                updated.showScaleLine = boolValue
+            }
+        case "scaleLineColor":
+            if let colorValue = value as? SerializableColor {
+                updated.scaleLineColor = colorValue
+            }
+        case "showScaleLabel":
+            if let boolValue = value as? Bool {
+                updated.showScaleLabel = boolValue
             }
         case "showGrid":
             if let boolValue = value as? Bool {
@@ -245,9 +319,11 @@ public struct MinimapConfiguration: InstrumentConfiguration, Codable {
                 updated.cornerRadius = doubleValue
             }
         default:
+            print("🔍 MinimapConfiguration: unknown key '\(key)'")
             return nil
         }
 
+        print("🔍 MinimapConfiguration: updated '\(key)'")
         return updated
     }
 }
@@ -326,7 +402,7 @@ public struct MinimapRenderer: InstrumentRenderer {
 
         debugLogStatus(config: config, viewState: viewState)
 
-        if config.style == .standard {
+        if config.style != .simple {
             let result = renderTiles(renderer: renderer, viewState: viewState, zoomLevel: config.zoomLevel, context: context)
             if result.loaded == 0 {
                 renderLoadingMessage(renderer: renderer, bounds: bounds, result: result, context: context)
@@ -370,9 +446,7 @@ public struct MinimapRenderer: InstrumentRenderer {
             context: context
         )
 
-        if config.showScale {
-            renderScale(renderer: renderer, bounds: bounds, context: context)
-        }
+        renderScale(renderer: renderer, bounds: bounds, viewState: viewState, context: context, config: config)
 
         resetScissor(context: context)
     }
@@ -559,7 +633,7 @@ public struct MinimapRenderer: InstrumentRenderer {
                 in: rect,
                 tintColor: .white,
                 renderContext: context,
-                //flipVertical: false
+                flipVertical: false
             )
             drewAny += 1
         }
@@ -730,53 +804,114 @@ public struct MinimapRenderer: InstrumentRenderer {
         renderer.drawCircle(center: cgPoint, radius: 3, color: .white, renderContext: context)
     }
 
-    private func renderScale(renderer: Metal2DRenderer, bounds: CGRect, context: MetalRenderContext) {
+    private func renderScale(
+        renderer: Metal2DRenderer,
+        bounds: CGRect,
+        viewState: MinimapViewState,
+        context: MetalRenderContext,
+        config: MinimapConfiguration
+    ) {
         #if canImport(AppKit)
-        let scaleLength: CGFloat = 60
+        let centerLat = (viewState.minLat + viewState.maxLat) / 2.0
+        let left = CLLocation(latitude: centerLat, longitude: viewState.minLon)
+        let right = CLLocation(latitude: centerLat, longitude: viewState.maxLon)
+        let metersAcross = max(1.0, left.distance(from: right))
+        let pixelsPerMeter = Double(bounds.width) / metersAcross
+
+        let desiredMeters: Double
+        if config.autoScaleDistance {
+            let minLength = bounds.width * 0.2
+            let maxLength = bounds.width * 0.6
+            let meterOptions: [Double] = [100, 200, 500, 1000, 2000, 5000, 10000]
+            let mile = 1609.344
+            let imperialOptions: [Double] = [
+                0.1 * mile, 0.2 * mile, 0.5 * mile, 1 * mile, 2 * mile, 5 * mile
+            ]
+            let options = (config.scaleUnits == .imperial) ? imperialOptions : meterOptions
+            var chosen = options.first ?? 1000.0
+            for option in options {
+                let length = CGFloat(option * pixelsPerMeter)
+                if length <= maxLength {
+                    chosen = option
+                }
+                if length >= minLength && length <= maxLength {
+                    chosen = option
+                }
+            }
+            desiredMeters = max(1.0, chosen)
+        } else {
+            desiredMeters = max(1.0, config.scaleDistanceMeters)
+        }
+        var scaleLength = CGFloat(desiredMeters * pixelsPerMeter)
+        let maxLength = bounds.width * 0.6
+        if scaleLength > maxLength {
+            scaleLength = maxLength
+        }
+
         let scaleY = bounds.maxY - 20
         let scaleStartX = bounds.minX + 20
         let scaleEndX = scaleStartX + scaleLength
 
-        renderer.drawLine(
-            from: CGPoint(x: scaleStartX, y: scaleY),
-            to: CGPoint(x: scaleEndX, y: scaleY),
-            lineWidth: 2,
-            color: .white,
-            renderContext: context
-        )
-
-        renderer.drawLine(
-            from: CGPoint(x: scaleStartX, y: scaleY - 4),
-            to: CGPoint(x: scaleStartX, y: scaleY + 4),
-            lineWidth: 2,
-            color: .white,
-            renderContext: context
-        )
-        renderer.drawLine(
-            from: CGPoint(x: scaleEndX, y: scaleY - 4),
-            to: CGPoint(x: scaleEndX, y: scaleY + 4),
-            lineWidth: 2,
-            color: .white,
-            renderContext: context
-        )
-
-        let scaleText = "1 km"
-        let font = NSFont.systemFont(ofSize: 10, weight: .medium)
-        if let (tex, size) = MetalTextRenderer.shared.texture(
-            text: scaleText,
-            font: font,
-            color: .white,
-            device: context.device,
-            scale: max(1.0, context.scale),
-            extraVerticalPadding: 2
-        ) {
-            let rect = CGRect(
-                x: scaleStartX + scaleLength / 2 - size.width / 2,
-                y: scaleY - size.height - 4,
-                width: size.width,
-                height: size.height
+        if config.showScaleLine {
+            renderer.drawLine(
+                from: CGPoint(x: scaleStartX, y: scaleY),
+                to: CGPoint(x: scaleEndX, y: scaleY),
+                lineWidth: 2,
+                color: config.scaleLineColor,
+                renderContext: context
             )
-            renderer.drawTexture(tex, in: rect, tintColor: .white, renderContext: context)
+
+            renderer.drawLine(
+                from: CGPoint(x: scaleStartX, y: scaleY - 4),
+                to: CGPoint(x: scaleStartX, y: scaleY + 4),
+                lineWidth: 2,
+                color: config.scaleLineColor,
+                renderContext: context
+            )
+            renderer.drawLine(
+                from: CGPoint(x: scaleEndX, y: scaleY - 4),
+                to: CGPoint(x: scaleEndX, y: scaleY + 4),
+                lineWidth: 2,
+                color: config.scaleLineColor,
+                renderContext: context
+            )
+        }
+
+        if config.showScaleLabel {
+            let scaleText: String
+            if config.scaleUnits == .imperial {
+                let feet = desiredMeters * 3.28084
+                if feet >= 5280 {
+                    let miles = feet / 5280.0
+                    scaleText = String(format: "%.1f mi", miles).replacingOccurrences(of: ".0", with: "")
+                } else {
+                    scaleText = String(format: "%.0f ft", feet)
+                }
+            } else {
+                if desiredMeters >= 1000 {
+                    let km = desiredMeters / 1000.0
+                    scaleText = String(format: "%.1f km", km).replacingOccurrences(of: ".0", with: "")
+                } else {
+                    scaleText = String(format: "%.0f m", desiredMeters)
+                }
+            }
+            let font = NSFont.systemFont(ofSize: 10, weight: .medium)
+            if let (tex, size) = MetalTextRenderer.shared.texture(
+                text: scaleText,
+                font: font,
+                color: config.scaleLineColor,
+                device: context.device,
+                scale: max(1.0, context.scale),
+                extraVerticalPadding: 2
+            ) {
+                let rect = CGRect(
+                    x: scaleStartX + scaleLength / 2 - size.width / 2,
+                    y: scaleY - size.height - 4,
+                    width: size.width,
+                    height: size.height
+                )
+                renderer.drawTexture(tex, in: rect, tintColor: .white, renderContext: context)
+            }
         }
         #endif
     }

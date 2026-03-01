@@ -185,6 +185,8 @@ public final class CanvasViewModel {
         }
 
         transform(&instruments[index])
+        // Force observation of in-place mutations for SwiftUI updates
+        instruments = instruments
     }
 
     /// Clear all instruments from the canvas
@@ -568,4 +570,3 @@ private struct CanvasLayout: Codable {
         try container.encode(instruments, forKey: .instruments)
     }
 }
-

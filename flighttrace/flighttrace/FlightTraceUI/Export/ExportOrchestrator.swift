@@ -147,7 +147,7 @@ public final class ExportOrchestrator {
     // MARK: - Instrument Preparation
 
     /// Renderable instrument data
-    private struct RenderableInstrument: Sendable {
+    private struct RenderableInstrument {
         let instance: InstrumentInstance
         let plugin: any InstrumentPlugin.Type
         let renderer: any InstrumentRenderer
@@ -208,7 +208,7 @@ public final class ExportOrchestrator {
     // MARK: - Frame Rendering
 
     /// Render all instruments for a single frame (static method to avoid actor isolation issues)
-    private nonisolated static func renderInstrumentsStatic(
+    @preconcurrency private nonisolated static func renderInstrumentsStatic(
         _ instruments: [RenderableInstrument],
         into context: MetalRenderContext,
         canvasSize: CGSize,
@@ -295,3 +295,4 @@ public extension ExportOrchestrator {
         )
     }
 }
+

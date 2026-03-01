@@ -21,13 +21,13 @@ struct FlightTraceApp: App {
                 .onAppear {
                     #if canImport(AppKit)
                     let bid = Bundle.main.bundleIdentifier ?? "nil"
-                    print("[App] WindowGroup.onAppear: bundleId=\(bid) isActive=\(NSApp.isActive) windows=\(NSApp.windows.count) key=\(NSApp.keyWindow?.title ?? "nil")")
+                    // print("[App] WindowGroup.onAppear: bundleId=\(bid) isActive=\(NSApp.isActive) windows=\(NSApp.windows.count) key=\(NSApp.keyWindow?.title ?? "nil")")
                     NSApp.setActivationPolicy(.regular)
                     if let window = NSApp.keyWindow ?? NSApp.mainWindow ?? NSApp.windows.first {
-                        print("[App] WindowGroup.onAppear: making key window: \(window.title)")
+                        // print("[App] WindowGroup.onAppear: making key window: \(window.title)")
                         window.makeKeyAndOrderFront(nil)
                     } else {
-                        print("[App] WindowGroup.onAppear: no window to make key")
+                        // print("[App] WindowGroup.onAppear: no window to make key")
                     }
                     NSApp.activate(ignoringOtherApps: true)
                     #endif
@@ -61,22 +61,22 @@ struct ContentView: View {
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         let bid = Bundle.main.bundleIdentifier ?? "nil"
-        print("[AppDelegate] didFinishLaunching: bundleId=\(bid) activationPolicy=\(String(describing: NSApp.activationPolicy))")
+        // print("[AppDelegate] didFinishLaunching: bundleId=\(bid) activationPolicy=\(String(describing: NSApp.activationPolicy))")
         NSApp.setActivationPolicy(.regular)
         if let window = NSApp.keyWindow ?? NSApp.mainWindow ?? NSApp.windows.first {
-            print("[AppDelegate] making key window: \(window.title)")
+            // print("[AppDelegate] making key window: \(window.title)")
             window.makeKeyAndOrderFront(nil)
         } else {
-            print("[AppDelegate] no window available at launch")
+            // print("[AppDelegate] no window available at launch")
         }
         NSApp.activate(ignoringOtherApps: true)
     }
     func applicationDidBecomeActive(_ notification: Notification) {
-        print("[AppDelegate] applicationDidBecomeActive")
+        // print("[AppDelegate] applicationDidBecomeActive")
     }
 
     func applicationDidResignActive(_ notification: Notification) {
-        print("[AppDelegate] applicationDidResignActive")
+        // print("[AppDelegate] applicationDidResignActive")
     }
 }
 #endif

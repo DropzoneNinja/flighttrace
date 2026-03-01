@@ -121,9 +121,9 @@ public struct TelemetryCalculator {
                     let acceleration = speedDelta / timeDelta
                     let gForce = sqrt(pow(acceleration / gravityAcceleration, 2) + 1) // Total G-force
 
-                    if i < 5 || i == track.points.count - 1 {
-                        print("🔍 TelemetryCalculator[point \(i)]: Calculated G-force = \(gForce) (speed: \(previousSpeed) → \(currentSpeed) m/s, accel: \(acceleration) m/s²)")
-                    }
+                    // if i < 5 || i == track.points.count - 1 {
+                    //     print("🔍 TelemetryCalculator[point \(i)]: Calculated G-force = \(gForce) (speed: \(previousSpeed) → \(currentSpeed) m/s, accel: \(acceleration) m/s²)")
+                    // }
 
                     point = TelemetryPoint(
                         id: point.id,

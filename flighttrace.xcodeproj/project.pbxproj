@@ -74,14 +74,178 @@
 		F54F9ADED6534335ACF44CB4 /* FlightTracePlugins.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlightTracePlugins.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		0BB0A8DD7CB94AF3BCBB31EA /* flighttrace/FlightTracePlugins */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = flighttrace/FlightTracePlugins;
-			sourceTree = "<group>";
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		93ABF5F42F545F6200649571 /* Exceptions for "flighttrace" folder in "flighttrace" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				flighttrace/FlightTraceCore/Export/ExportConfiguration.swift,
+				flighttrace/FlightTraceCore/Export/ExportEngine.swift,
+				flighttrace/FlightTraceCore/Export/VideoRenderer.swift,
+				flighttrace/FlightTraceCore/FlightTraceCore.swift,
+				flighttrace/FlightTraceCore/GPX/GPXParser.swift,
+				flighttrace/FlightTraceCore/Models/TelemetryPoint.swift,
+				flighttrace/FlightTraceCore/Models/TelemetryTrack.swift,
+				flighttrace/FlightTraceCore/Processing/DataSmoother.swift,
+				flighttrace/FlightTraceCore/Processing/TelemetryCalculator.swift,
+				flighttrace/FlightTraceCore/Rendering/MetalRenderContext.swift,
+				flighttrace/FlightTraceCore/Rendering/RenderEdgeInsets.swift,
+				flighttrace/FlightTraceCore/Timeline/TimelineEngine.swift,
+				flighttrace/FlightTraceCore/Timeline/TimelinePosition.swift,
+				flighttrace/FlightTracePlugins/Core/ExportDataProvider.swift,
+				flighttrace/FlightTracePlugins/Core/PluginHost.swift,
+				flighttrace/FlightTracePlugins/Core/PluginHostExtensions.swift,
+				flighttrace/FlightTracePlugins/Core/TimelineDataProvider.swift,
+				flighttrace/FlightTracePlugins/FlightTracePlugins.swift,
+				flighttrace/FlightTracePlugins/Instruments/AirspeedGaugePlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/AltimeterGaugePlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/AltitudeDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/AltitudeGraphPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/DistanceDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/GMeterDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/HeadingPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/Metal2DRenderer.swift,
+				flighttrace/FlightTracePlugins/Instruments/Metal2DShaders.metal,
+				flighttrace/FlightTracePlugins/Instruments/MinimapPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/MinimapTileCache.swift,
+				flighttrace/FlightTracePlugins/Instruments/SpeedDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/TimestampDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/TracklinePlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/VerticalSpeedDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/VerticalSpeedGaugePlugin.swift,
+				flighttrace/FlightTracePlugins/PLUGIN_ARCHITECTURE.md,
+				flighttrace/FlightTracePlugins/Protocols/InstrumentConfiguration.swift,
+				flighttrace/FlightTracePlugins/Protocols/InstrumentPlugin.swift,
+				flighttrace/FlightTracePlugins/Protocols/InstrumentRenderer.swift,
+				flighttrace/FlightTracePlugins/Protocols/RenderContext.swift,
+				flighttrace/FlightTracePlugins/Protocols/TelemetryDataProvider.swift,
+				"flighttrace/FlightTracePlugins/Resources/alt-gauge-outline.png",
+				"flighttrace/FlightTracePlugins/Resources/alt-gauge-steam.png",
+				"flighttrace/FlightTracePlugins/Resources/steam-gauge-bezel.png",
+				"flighttrace/FlightTracePlugins/Resources/vertical-speed-gauge-steam.png",
+				flighttrace/FlightTraceUI/Export/ExportOrchestrator.swift,
+				flighttrace/FlightTraceUI/FlightTraceUI.swift,
+				flighttrace/FlightTraceUI/Models/InstrumentInstance.swift,
+				flighttrace/FlightTraceUI/Utils/InstrumentRendererCache.swift,
+				flighttrace/FlightTraceUI/Utils/SnapGuideEngine.swift,
+				flighttrace/FlightTraceUI/ViewModels/CanvasViewModel.swift,
+				flighttrace/FlightTraceUI/Views/AspectRatioOverlayView.swift,
+				flighttrace/FlightTraceUI/Views/ExportLogView.swift,
+				flighttrace/FlightTraceUI/Views/ExportProgressView.swift,
+				flighttrace/FlightTraceUI/Views/ExportSettingsView.swift,
+				flighttrace/FlightTraceUI/Views/ExportSettingsWindow.swift,
+				flighttrace/FlightTraceUI/Views/GPXImportView.swift,
+				flighttrace/FlightTraceUI/Views/InspectorPanelView.swift,
+				flighttrace/FlightTraceUI/Views/LayoutFileManager.swift,
+				flighttrace/FlightTraceUI/Views/MainCanvasView.swift,
+				flighttrace/FlightTraceUI/Views/MainWindowView.swift,
+				flighttrace/FlightTraceUI/Views/MetalInstrumentView.swift,
+				flighttrace/FlightTraceUI/Views/OverlayCanvasView.swift,
+				flighttrace/FlightTraceUI/Views/PluginCatalogView.swift,
+				flighttrace/FlightTraceUI/Views/PreferencesView.swift,
+				flighttrace/FlightTraceUI/Views/SelectionHandlesView.swift,
+				flighttrace/FlightTraceUI/Views/SnapGuidesView.swift,
+				flighttrace/FlightTraceUI/Views/TimelineScrubberView.swift,
+				flighttrace/FlightTraceUI/Views/VideoImportView.swift,
+			);
+			target = 93CDD61F2F52A7C000FAF628 /* flighttrace */;
 		};
+		93ABF5F52F545F6200649571 /* Exceptions for "flighttrace" folder in "FlightTraceCore" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				flighttrace/FlightTraceCore/Export/ExportConfiguration.swift,
+				flighttrace/FlightTraceCore/Export/ExportEngine.swift,
+				flighttrace/FlightTraceCore/Export/VideoRenderer.swift,
+				flighttrace/FlightTraceCore/FlightTraceCore.swift,
+				flighttrace/FlightTraceCore/GPX/GPXParser.swift,
+				flighttrace/FlightTraceCore/Models/TelemetryPoint.swift,
+				flighttrace/FlightTraceCore/Models/TelemetryTrack.swift,
+				flighttrace/FlightTraceCore/Processing/DataSmoother.swift,
+				flighttrace/FlightTraceCore/Processing/TelemetryCalculator.swift,
+				flighttrace/FlightTraceCore/Rendering/MetalRenderContext.swift,
+				flighttrace/FlightTraceCore/Rendering/RenderEdgeInsets.swift,
+				flighttrace/FlightTraceCore/Timeline/TimelineEngine.swift,
+				flighttrace/FlightTraceCore/Timeline/TimelinePosition.swift,
+			);
+			target = 52C45F9534A14518A7E0D6F5 /* FlightTraceCore */;
+		};
+		93ABF6392F545F6600649571 /* Exceptions for "flighttrace" folder in "FlightTracePlugins" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				flighttrace/FlightTracePlugins/Core/ExportDataProvider.swift,
+				flighttrace/FlightTracePlugins/Core/PluginHost.swift,
+				flighttrace/FlightTracePlugins/Core/PluginHostExtensions.swift,
+				flighttrace/FlightTracePlugins/Core/TimelineDataProvider.swift,
+				flighttrace/FlightTracePlugins/FlightTracePlugins.swift,
+				flighttrace/FlightTracePlugins/Instruments/AirspeedGaugePlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/AltimeterGaugePlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/AltitudeDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/AltitudeGraphPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/DistanceDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/GMeterDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/HeadingPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/Metal2DRenderer.swift,
+				flighttrace/FlightTracePlugins/Instruments/Metal2DShaders.metal,
+				flighttrace/FlightTracePlugins/Instruments/MinimapPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/MinimapTileCache.swift,
+				flighttrace/FlightTracePlugins/Instruments/SpeedDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/TimestampDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/TracklinePlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/VerticalSpeedDigitalPlugin.swift,
+				flighttrace/FlightTracePlugins/Instruments/VerticalSpeedGaugePlugin.swift,
+				flighttrace/FlightTracePlugins/PLUGIN_ARCHITECTURE.md,
+				flighttrace/FlightTracePlugins/Protocols/InstrumentConfiguration.swift,
+				flighttrace/FlightTracePlugins/Protocols/InstrumentPlugin.swift,
+				flighttrace/FlightTracePlugins/Protocols/InstrumentRenderer.swift,
+				flighttrace/FlightTracePlugins/Protocols/RenderContext.swift,
+				flighttrace/FlightTracePlugins/Protocols/TelemetryDataProvider.swift,
+				"flighttrace/FlightTracePlugins/Resources/alt-gauge-outline.png",
+				"flighttrace/FlightTracePlugins/Resources/alt-gauge-steam.png",
+				"flighttrace/FlightTracePlugins/Resources/steam-gauge-bezel.png",
+				"flighttrace/FlightTracePlugins/Resources/vertical-speed-gauge-steam.png",
+			);
+			target = 9D81E64EBC0647E189BD71C2 /* FlightTracePlugins */;
+		};
+		93ABF6702F545F6900649571 /* Exceptions for "flighttrace" folder in "FlightTraceUI" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				flighttrace/FlightTraceUI/Export/ExportOrchestrator.swift,
+				flighttrace/FlightTraceUI/FlightTraceUI.swift,
+				flighttrace/FlightTraceUI/Models/InstrumentInstance.swift,
+				flighttrace/FlightTraceUI/Utils/InstrumentRendererCache.swift,
+				flighttrace/FlightTraceUI/Utils/SnapGuideEngine.swift,
+				flighttrace/FlightTraceUI/ViewModels/CanvasViewModel.swift,
+				flighttrace/FlightTraceUI/Views/AspectRatioOverlayView.swift,
+				flighttrace/FlightTraceUI/Views/ExportLogView.swift,
+				flighttrace/FlightTraceUI/Views/ExportProgressView.swift,
+				flighttrace/FlightTraceUI/Views/ExportSettingsView.swift,
+				flighttrace/FlightTraceUI/Views/ExportSettingsWindow.swift,
+				flighttrace/FlightTraceUI/Views/GPXImportView.swift,
+				flighttrace/FlightTraceUI/Views/InspectorPanelView.swift,
+				flighttrace/FlightTraceUI/Views/LayoutFileManager.swift,
+				flighttrace/FlightTraceUI/Views/MainCanvasView.swift,
+				flighttrace/FlightTraceUI/Views/MainWindowView.swift,
+				flighttrace/FlightTraceUI/Views/MetalInstrumentView.swift,
+				flighttrace/FlightTraceUI/Views/OverlayCanvasView.swift,
+				flighttrace/FlightTraceUI/Views/PluginCatalogView.swift,
+				flighttrace/FlightTraceUI/Views/PreferencesView.swift,
+				flighttrace/FlightTraceUI/Views/SelectionHandlesView.swift,
+				flighttrace/FlightTraceUI/Views/SnapGuidesView.swift,
+				flighttrace/FlightTraceUI/Views/TimelineScrubberView.swift,
+				flighttrace/FlightTraceUI/Views/VideoImportView.swift,
+			);
+			target = 0A5C563DB33349FE9D65C121 /* FlightTraceUI */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
 		93CDD6222F52A7C000FAF628 /* flighttrace */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				93ABF5F42F545F6200649571 /* Exceptions for "flighttrace" folder in "flighttrace" target */,
+				93ABF5F52F545F6200649571 /* Exceptions for "flighttrace" folder in "FlightTraceCore" target */,
+				93ABF6392F545F6600649571 /* Exceptions for "flighttrace" folder in "FlightTracePlugins" target */,
+				93ABF6702F545F6900649571 /* Exceptions for "flighttrace" folder in "FlightTraceUI" target */,
+			);
 			path = flighttrace;
 			sourceTree = "<group>";
 		};
@@ -103,16 +267,6 @@
 		93CDD66C2F52A8DE00FAF628 /* GPX Files */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "GPX Files";
-			sourceTree = "<group>";
-		};
-		D93D243EB49B4E0A93974B7C /* flighttrace/FlightTraceUI */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = flighttrace/FlightTraceUI;
-			sourceTree = "<group>";
-		};
-		DAAEBF3A016844008A71F55B /* flighttrace/FlightTraceCore */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = flighttrace/FlightTraceCore;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -167,16 +321,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		93B38A752F53C3260019561B /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				DAAEBF3A016844008A71F55B /* flighttrace/FlightTraceCore */,
-				0BB0A8DD7CB94AF3BCBB31EA /* flighttrace/FlightTracePlugins */,
-				D93D243EB49B4E0A93974B7C /* flighttrace/FlightTraceUI */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		93CDD6172F52A7C000FAF628 = {
 			isa = PBXGroup;
 			children = (
@@ -191,7 +335,6 @@
 				93CDD6542F52A87300FAF628 /* TODO.md */,
 				93CDD6632F52A8CD00FAF628 /* Raw */,
 				93CDD66C2F52A8DE00FAF628 /* GPX Files */,
-				93B38A752F53C3260019561B /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -225,9 +368,6 @@
 				DA34E086C2164CF2BDFF0C90 /* PBXTargetDependency */,
 				D355C1B2526E46E383258E70 /* PBXTargetDependency */,
 			);
-			fileSystemSynchronizedGroups = (
-				D93D243EB49B4E0A93974B7C /* flighttrace/FlightTraceUI */,
-			);
 			name = FlightTraceUI;
 			packageProductDependencies = (
 			);
@@ -246,9 +386,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				DAAEBF3A016844008A71F55B /* flighttrace/FlightTraceCore */,
 			);
 			name = FlightTraceCore;
 			packageProductDependencies = (
@@ -338,9 +475,6 @@
 			);
 			dependencies = (
 				B406AA7BBF2E4720A244387D /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				0BB0A8DD7CB94AF3BCBB31EA /* flighttrace/FlightTracePlugins */,
 			);
 			name = FlightTracePlugins;
 			packageProductDependencies = (
