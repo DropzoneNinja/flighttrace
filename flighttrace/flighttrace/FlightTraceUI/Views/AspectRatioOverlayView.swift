@@ -95,6 +95,9 @@ public struct AspectRatioOverlayView: View {
                 // Safe area border
                 safeAreaBorder(bounds: bounds)
 
+                // Minor guide lines
+                minorGuides(bounds: bounds)
+
                 // Corner markers
                 cornerMarkers(bounds: bounds)
 
@@ -156,6 +159,45 @@ public struct AspectRatioOverlayView: View {
             .strokeBorder(Color.yellow, lineWidth: 2)
             .frame(width: bounds.width, height: bounds.height)
             .position(x: bounds.midX, y: bounds.midY)
+    }
+
+    // MARK: - Minor Guides
+
+    @ViewBuilder
+    private func minorGuides(bounds: CGRect) -> some View {
+        let midColor = Color.blue.opacity(0.35)
+        let thirdColor = Color.green.opacity(0.35)
+        let lineWidth: CGFloat = 1
+        let hFractions: [CGFloat] = [0.5, 1.0 / 3.0, 2.0 / 3.0]
+        let vFractions: [CGFloat] = [0.5, 1.0 / 3.0, 2.0 / 3.0]
+
+        // Horizontal lines
+        ForEach(hFractions, id: \.self) { f in
+            let y = bounds.minY + bounds.height * f
+            let color = f == 0.5 ? midColor : thirdColor
+            Path { path in
+                path.move(to: CGPoint(x: bounds.minX, y: y))
+                path.addLine(to: CGPoint(x: bounds.maxX, y: y))
+            }
+            .stroke(
+                color,
+                style: StrokeStyle(lineWidth: lineWidth, dash: [6, 6])
+            )
+        }
+
+        // Vertical lines
+        ForEach(vFractions, id: \.self) { f in
+            let x = bounds.minX + bounds.width * f
+            let color = f == 0.5 ? midColor : thirdColor
+            Path { path in
+                path.move(to: CGPoint(x: x, y: bounds.minY))
+                path.addLine(to: CGPoint(x: x, y: bounds.maxY))
+            }
+            .stroke(
+                color,
+                style: StrokeStyle(lineWidth: lineWidth, dash: [6, 6])
+            )
+        }
     }
 
     // MARK: - Corner Markers

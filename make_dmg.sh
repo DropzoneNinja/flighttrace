@@ -1,37 +1,70 @@
 #!/usr/bin/env bash
-   set -euo pipefail
+set -euo pipefail
 
-   APP_NAME="flighttrace"
-   SCHEME_NAME="package"
-   BUILD_DIR="build"
-   APP_PATH="$BUILD_DIR/Build/Products/Release/${APP_NAME}.app"
-   STAGE_DIR="${APP_NAME}-Installer"
-   DMG_NAME="${APP_NAME}.dmg"
+APP_NAME="flighttrace"
 
-   # 1) Ensure app exists
-   if [ ! -d "$APP_PATH" ]; then
-     echo "App not found at $APP_PATH. Build first or adjust paths."
-     exit 1
-   fi
+# Xcode settings
+PROJECT_PATH="flighttrace.xcodeproj"   # or: "flighttrace.xcworkspace"
+USE_WORKSPACE=false                    # set true if using xcworkspace
+SCHEME_NAME="flighttrace"              # your actual Xcode scheme name
+CONFIGURATION="Release"                # Release or Debug
+SDK="macosx"
 
-   # 2) Prepare staging folder
-   rm -rf "$STAGE_DIR" "$DMG_NAME"
-   mkdir -p "$STAGE_DIR"
-   cp -R "$APP_PATH" "$STAGE_DIR/"
+# Output
+STAGE_DIR="${APP_NAME}-Installer"
+DMG_NAME="${APP_NAME}.dmg"
 
-   # 3) Create Applications alias
-   /usr/bin/osascript <<EOF
-   tell application "Finder"
-     set targetFolder to (POSIX file "$(pwd)/$STAGE_DIR") as alias
-     make new alias file at targetFolder to POSIX file "/Applications" with properties {name:"Applications"}
-   end tell
-   EOF
+echo "==> Building ${SCHEME_NAME} (${CONFIGURATION})"
 
-   # 4) Optional: create a background image (skip if you have your own)
-   # You can drop a PNG at "$STAGE_DIR/.background/bg.png" and set window layout with AppleScript.
-   mkdir -p "$STAGE_DIR/.background"
+if [[ "$USE_WORKSPACE" == "true" ]]; then
+  BUILD_SETTINGS_CMD=(xcodebuild -workspace "$PROJECT_PATH" -scheme "$SCHEME_NAME" -configuration "$CONFIGURATION" -sdk "$SDK" -showBuildSettings)
+  BUILD_CMD=(xcodebuild -workspace "$PROJECT_PATH" -scheme "$SCHEME_NAME" -configuration "$CONFIGURATION" -sdk "$SDK" build)
+else
+  BUILD_SETTINGS_CMD=(xcodebuild -project "$PROJECT_PATH" -scheme "$SCHEME_NAME" -configuration "$CONFIGURATION" -sdk "$SDK" -showBuildSettings)
+  BUILD_CMD=(xcodebuild -project "$PROJECT_PATH" -scheme "$SCHEME_NAME" -configuration "$CONFIGURATION" -sdk "$SDK" build)
+fi
 
-   # 5) Create DMG
-   hdiutil create -volname "$APP_NAME" -srcfolder "$STAGE_DIR" -ov -format UDZO "$DMG_NAME"
+# Build first (so the .app exists where settings point)
+"${BUILD_CMD[@]}"
 
-   echo "Created $DMG_NAME"
+echo "==> Discovering built app path from build settings"
+
+# Ask xcodebuild where the app ended up:
+BUILD_SETTINGS="$("${BUILD_SETTINGS_CMD[@]}")"
+
+TARGET_BUILD_DIR="$(printf '%s\n' "$BUILD_SETTINGS" | awk -F' = ' '/TARGET_BUILD_DIR/ {print $2; exit}')"
+WRAPPER_NAME="$(printf '%s\n' "$BUILD_SETTINGS" | awk -F' = ' '/WRAPPER_NAME/ {print $2; exit}')"
+
+if [[ -z "${TARGET_BUILD_DIR:-}" || -z "${WRAPPER_NAME:-}" ]]; then
+  echo "Failed to detect TARGET_BUILD_DIR or WRAPPER_NAME from xcodebuild settings."
+  exit 1
+fi
+
+APP_PATH="${TARGET_BUILD_DIR}/${WRAPPER_NAME}"
+
+echo "==> App path: $APP_PATH"
+
+# Ensure app exists
+if [[ ! -d "$APP_PATH" ]]; then
+  echo "App not found at $APP_PATH"
+  exit 1
+fi
+
+echo "==> Preparing staging folder"
+rm -rf "$STAGE_DIR" "$DMG_NAME"
+mkdir -p "$STAGE_DIR"
+cp -R "$APP_PATH" "$STAGE_DIR/"
+
+echo "==> Creating /Applications alias"
+# IMPORTANT: EOF must be unindented
+/usr/bin/osascript <<EOF
+tell application "Finder"
+  set targetFolder to (POSIX file "$(pwd)/$STAGE_DIR") as alias
+  make new alias file at targetFolder to POSIX file "/Applications" with properties {name:"Applications"}
+end tell
+EOF
+
+echo "==> Creating DMG"
+hdiutil create -volname "$APP_NAME" -srcfolder "$STAGE_DIR" -ov -format UDZO "$DMG_NAME"
+
+echo "==> Created $DMG_NAME"

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		062095EA289B41588909F4E5 /* FlightTraceCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC2F5EBBCDE74009879C6E58 /* FlightTraceCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		09E4E5F0F1A940F6B4C21B75 /* FlightTracePlugins.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F54F9ADED6534335ACF44CB4 /* FlightTracePlugins.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2110906BA0734FFBADF8E7F3 /* FlightTraceUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 847AE49668FC40D096A64963 /* FlightTraceUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		622041CEBAD34D0A84F52C7C /* FlightTraceCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2F5EBBCDE74009879C6E58 /* FlightTraceCore.framework */; };
 		84213A42F9A34122A328AAFB /* FlightTracePlugins.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F54F9ADED6534335ACF44CB4 /* FlightTracePlugins.framework */; };
 		93CDD6532F52A86E00FAF628 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 93CDD6522F52A86E00FAF628 /* README.md */; };
@@ -59,6 +62,22 @@
 			remoteInfo = FlightTraceCore;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0CDC6DF650CE4CB88BC7F657 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2110906BA0734FFBADF8E7F3 /* FlightTraceUI.framework in Embed Frameworks */,
+				062095EA289B41588909F4E5 /* FlightTraceCore.framework in Embed Frameworks */,
+				09E4E5F0F1A940F6B4C21B75 /* FlightTracePlugins.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1017AAEA32B4429EBDF13EEE /* flighttrace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = flighttrace.entitlements; sourceTree = "<group>"; };
@@ -400,6 +419,7 @@
 			buildPhases = (
 				93CDD61C2F52A7C000FAF628 /* Sources */,
 				93CDD61D2F52A7C000FAF628 /* Frameworks */,
+				0CDC6DF650CE4CB88BC7F657 /* Embed Frameworks */,
 				93CDD61E2F52A7C000FAF628 /* Resources */,
 			);
 			buildRules = (
@@ -669,6 +689,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -691,6 +712,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -838,7 +860,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -889,7 +910,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1023,6 +1043,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1045,6 +1066,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1067,6 +1089,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
@@ -1089,6 +1112,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
