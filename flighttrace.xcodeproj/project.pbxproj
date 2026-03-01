@@ -61,6 +61,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1017AAEA32B4429EBDF13EEE /* flighttrace.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = flighttrace.entitlements; sourceTree = "<group>"; };
 		847AE49668FC40D096A64963 /* FlightTraceUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FlightTraceUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CDD6202F52A7C000FAF628 /* flighttrace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flighttrace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CDD62D2F52A7C100FAF628 /* flighttraceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = flighttraceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -183,6 +184,7 @@
 				93CDD6302F52A7C100FAF628 /* flighttraceTests */,
 				93CDD63A2F52A7C100FAF628 /* flighttraceUITests */,
 				93CDD6212F52A7C000FAF628 /* Products */,
+				1017AAEA32B4429EBDF13EEE /* flighttrace.entitlements */,
 				93CDD64F2F52A84B00FAF628 /* PROJECT.md */,
 				93CDD6512F52A86700FAF628 /* CLAUDE.md */,
 				93CDD6522F52A86E00FAF628 /* README.md */,
