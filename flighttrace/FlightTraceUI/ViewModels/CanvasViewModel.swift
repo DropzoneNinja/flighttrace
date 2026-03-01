@@ -99,13 +99,13 @@ public final class CanvasViewModel {
     public init(
         canvasSize: CGSize = CGSize(width: 1920, height: 1080),
         timelineEngine: TimelineEngine? = nil,
-        pluginHost: PluginHost = .shared
+        pluginHost: PluginHost? = nil
     ) {
         self.canvasSize = canvasSize
         let engine = timelineEngine ?? TimelineEngine()
         self.timelineEngine = engine
         self.dataProvider = engine.asDataProvider()
-        self.pluginHost = pluginHost
+        self.pluginHost = pluginHost ?? .shared
     }
 
     // MARK: - Instrument Management
@@ -568,3 +568,4 @@ private struct CanvasLayout: Codable {
         try container.encode(instruments, forKey: .instruments)
     }
 }
+

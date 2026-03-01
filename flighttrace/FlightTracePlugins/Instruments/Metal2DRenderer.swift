@@ -60,7 +60,7 @@ final class Metal2DRenderer: @unchecked Sendable {
             library = bundleLibrary
         } else if
             let url = Metal2DRenderer.resourceBundle.url(forResource: "Metal2DShaders", withExtension: "metal"),
-            let source = try? String(contentsOf: url),
+            let source = try? String(contentsOf: url, encoding: .utf8),
             let sourceLibrary = try? device.makeLibrary(source: source, options: nil) {
             library = sourceLibrary
         } else {

@@ -195,7 +195,7 @@ public struct VideoImportView: View {
 
     private func loadVideoFile(url: URL) {
         // Extract video metadata
-        let asset = AVAsset(url: url)
+        let asset = AVURLAsset(url: url)
 
         Task {
             do {

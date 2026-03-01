@@ -379,6 +379,21 @@ public struct AltitudeGraphRenderer: InstrumentRenderer {
         let rawRange = maxElevation - minElevation
         let range = max(1.0, rawRange)
         let scale = max(1.0, context.scale)
+        let unitStep: Double = (config.units == .feet) ? 100.0 : 50.0
+
+        func snapFractionToUnitStep(_ fraction: Double) -> Double {
+            let rawValue = minElevation + rawRange * fraction
+            let displayValue = config.units.convert(meters: rawValue)
+            let roundedDisplay = (displayValue / unitStep).rounded(.toNearestOrAwayFromZero) * unitStep
+            let roundedMeters: Double
+            switch config.units {
+            case .meters:
+                roundedMeters = roundedDisplay
+            case .feet:
+                roundedMeters = roundedDisplay / 3.28084
+            }
+            return max(0.0, min(1.0, (roundedMeters - minElevation) / range))
+        }
 
         struct AxisLabel {
             let texture: MTLTexture
@@ -390,11 +405,11 @@ public struct AltitudeGraphRenderer: InstrumentRenderer {
 
         #if canImport(AppKit)
         let font = NSFont.systemFont(ofSize: config.fontSize, weight: .medium)
-        let labelRange = max(0.0, rawRange)
         let fractions: [Double] = [1.0, 2.0 / 3.0, 1.0 / 3.0]
         for fraction in fractions {
-            let value = minElevation + labelRange * fraction
-            let text = formattedAltitude(value: config.units.convert(meters: value), decimals: config.decimalPlaces)
+            let snappedFraction = snapFractionToUnitStep(fraction)
+            let snappedMeters = minElevation + range * snappedFraction
+            let text = formattedAltitude(value: config.units.convert(meters: snappedMeters), decimals: config.decimalPlaces)
                 + " " + config.units.rawValue
             if let (tex, size) = MetalTextRenderer.shared.texture(
                 text: text,
@@ -403,7 +418,7 @@ public struct AltitudeGraphRenderer: InstrumentRenderer {
                 device: context.device,
                 scale: scale
             ) {
-                axisLabels.append(AxisLabel(texture: tex, size: size, fraction: fraction))
+                axisLabels.append(AxisLabel(texture: tex, size: size, fraction: snappedFraction))
             }
         }
         #endif
@@ -453,7 +468,8 @@ public struct AltitudeGraphRenderer: InstrumentRenderer {
 
         let dottedFractions: [Double] = [2.0 / 3.0, 1.0 / 3.0]
         for fraction in dottedFractions {
-            let y = graphRect.maxY - graphRect.height * CGFloat(fraction)
+            let snappedFraction = snapFractionToUnitStep(fraction)
+            let y = graphRect.maxY - graphRect.height * CGFloat(snappedFraction)
             drawDottedLine(
                 renderer: renderer,
                 from: CGPoint(x: graphRect.minX, y: y),
