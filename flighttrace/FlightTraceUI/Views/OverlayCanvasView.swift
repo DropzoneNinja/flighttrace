@@ -57,6 +57,14 @@ public struct OverlayCanvasView: View {
                         viewModel.deselectInstrument()
                     }
 
+                // Safe area guides overlay
+                if viewModel.showSafeAreaGuides {
+                    AspectRatioOverlayView(
+                        canvasSize: viewModel.canvasSize,
+                        aspectRatio: viewModel.selectedAspectRatio ?? .landscape16x9
+                    )
+                }
+
                 // Instruments layer
                 ForEach(viewModel.sortedInstruments) { instrument in
                     instrumentView(for: instrument)

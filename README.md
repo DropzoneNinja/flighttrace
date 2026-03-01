@@ -6,6 +6,16 @@
 
 FlightTrace is a native macOS application for building polished, telemetry‑driven video overlays from GPX data. It lets creators import a track, choose instruments (speed, altitude, G‑meter, minimap, etc.), compose them on a canvas, preview them against a timeline, and export frame‑accurate overlays for their footage.
 
+So the reason why I embarked on this project was that the commercial software was a bit expensive for my taste and Dashware hasn't been updated in years. If you can find where to download it.
+
+# Vibe coding
+
+Although I'm a professional programmer (I do get paid for writing code), I wanted to get some hands on experience with AI Assisted and AI led coding. This was majority written by Claude and Codex. (I did some minor work to get things working).
+
+I found the experience quite incredible. The code is not that bad, but there were some limitations that I had to work around. All in all, it is one of the better programmers I've every worked with.
+
+If you don't like AI code, this is not the project for you.
+
 ## Highlights
 
 - GPX import with derived telemetry (speed, vertical speed, distance, G‑forces)
