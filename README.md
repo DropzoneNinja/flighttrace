@@ -1,148 +1,57 @@
+<p align="center">
+  <img src="assets/logo.png" alt="FlightTrace logo" width="220" />
+</p>
+
 # FlightTrace
 
-A native macOS application for generating GPS-based video overlays from GPX files.
+FlightTrace is a native macOS application for building polished, telemetry‑driven video overlays from GPX data. It lets creators import a track, choose instruments (speed, altitude, G‑meter, minimap, etc.), compose them on a canvas, preview them against a timeline, and export frame‑accurate overlays for their footage.
 
-## Overview
+## Highlights
 
-FlightTrace allows users to create customizable instrument overlays (speed, altitude, G-meter, minimap, etc.) and position them freely on a canvas before rendering them into video exports. Perfect for action sports, aviation, and outdoor activities.
+- GPX import with derived telemetry (speed, vertical speed, distance, G‑forces)
+- Canvas editor with drag/resize/rotate and snap guides
+- Timeline‑driven preview for precise sync
+- Metal‑based rendering for consistent output and performance
+- Plugin architecture for extensible instruments
 
-## Architecture
+## How It Works
 
-The application follows a **plugin-driven architecture** to enable extensibility without modifying core code.
+The project is structured into three primary modules:
 
-### Core Modules
+- `FlightTraceCore` — GPX parsing, telemetry processing, timeline engine, export pipeline
+- `FlightTracePlugins` — plugin protocols, registry, and built‑in instruments
+- `FlightTraceUI` — SwiftUI interface, canvas editor, inspector, timeline, and export UI
 
-```
-FlightTrace/
-├── FlightTraceCore       # GPX parsing, timeline, export engine
-├── FlightTracePlugins    # Plugin protocols and instruments
-├── FlightTraceUI         # SwiftUI views (canvas, timeline, inspector)
-└── FlightTraceApp        # Main application entry point
-```
+## Requirements
 
-#### FlightTraceCore
-- **GPXParser**: Parses GPX files, derives speed/vertical speed/G-forces
-- **TimelineEngine**: Synchronizes GPX data with video timeline
-- **ExportEngine**: Frame-accurate offline video rendering
-- **TelemetryDataProvider**: Plugin interface for querying telemetry
+- macOS 14+ (Sonoma or later)
+- Xcode 15+ for building
 
-#### FlightTracePlugins
-- **Plugin Protocols**: `InstrumentPlugin`, `InstrumentRenderer` (Metal-only), `InstrumentConfiguration`
-- **PluginHost**: Runtime plugin discovery and registry
-- **Instruments**: Speed gauge, altitude, G-meter, minimap, etc.
+## Build & Run
 
-#### FlightTraceUI
-- **OverlayCanvas**: Canvas editor with drag/resize/rotate/snap guides
-- **Timeline**: Scrubber for real-time preview synchronization
-- **Inspector**: Per-instrument configuration panels
+1. Open `flighttrace.xcodeproj` in Xcode.
+2. Select the `flighttrace` scheme.
+3. Run the app.
 
-#### FlightTraceApp
-- Main window layout and application lifecycle
-
-## Plugin System
-
-Each instrument is an independent plugin conforming to:
-
-- **InstrumentPlugin**: Defines ID, name, data dependencies, default size
-- **InstrumentRenderer**: Implements rendering (Metal-only)
-- **InstrumentConfiguration**: Exposes configurable properties
-
-**Key Design Principles:**
-- Plugins are isolated (no direct UI/export access)
-- Plugins declare data dependencies explicitly
-- New plugins require zero changes to core code
-- All plugin parameters are serializable
-
-## Development
-
-### Requirements
-- macOS Sonoma (14.0) or later
-- Xcode 15.0+ or Swift 5.9+
-- VSCode with Swift extension (optional)
-
-### Building
-
-```bash
-# Build the project
-swift build
-
-# Run tests
-swift test
-
-# Run the application
-swift run FlightTrace
-
-# Clean build artifacts
-swift package clean
-```
-
-### VSCode Development
-
-The project includes VSCode configurations:
-- **Build Task**: `Cmd+Shift+B` to build
-- **Test Task**: Configured in tasks.json
-- **Debug**: Launch configuration for LLDB
-
-## Current Status
-
-**Phase 0: Project Setup** ✅
-Foundation is complete. Ready for Phase 1 (GPX Processing).
-
-See [TODO.md](TODO.md) for detailed phase breakdown and progress tracking.
-
-## Project Structure
+## Project Layout
 
 ```
-FlightTrace/
-├── Package.swift                    # SPM configuration
-├── README.md                        # This file
-├── TODO.md                          # Phase tracking
-├── CLAUDE.md                        # Development guidelines
-├── PROJECT.md                       # Full specification
-├── Sources/
-│   ├── FlightTraceCore/
-│   │   ├── GPX/                    # GPX parsing
-│   │   ├── Models/                 # Data models
-│   │   ├── Processing/             # Telemetry calculations
-│   │   ├── Timeline/               # Timeline synchronization
-│   │   ├── Plugin/                 # Plugin data interfaces
-│   │   ├── Rendering/              # Render context
-│   │   └── Export/                 # Export engine
-│   ├── FlightTracePlugins/
-│   │   ├── PluginProtocols/        # Plugin interfaces
-│   │   ├── Instruments/            # Built-in instruments
-│   │   └── PluginHost.swift        # Plugin registry
-│   ├── FlightTraceUI/
-│   │   ├── Canvas/                 # Overlay canvas editor
-│   │   ├── Timeline/               # Timeline scrubber
-│   │   ├── Inspector/              # Configuration panels
-│   │   ├── MainWindow/             # Main window layout
-│   │   ├── Sidebar/                # Plugin catalog
-│   │   └── Export/                 # Export UI
-│   └── FlightTraceApp/
-│       └── main.swift              # App entry point
-├── Tests/
-│   ├── FlightTraceCoreTests/
-│   ├── FlightTracePluginsTests/
-│   └── FlightTraceIntegrationTests/
-└── .vscode/                        # VSCode configuration
+flighttrace/
+├── flighttraceApp.swift
+├── FlightTraceCore/
+├── FlightTracePlugins/
+├── FlightTraceUI/
+└── Assets.xcassets/
 ```
 
-## Key Features (Planned)
+## Status
 
-- ✅ Plugin-driven architecture
-- ⏳ GPX file parsing with derived telemetry
-- ⏳ Timeline synchronization with manual offset
-- ⏳ Canvas editor with snap guides
-- ⏳ 9 built-in instruments (speed, altitude, G-meter, minimap, etc.)
-- ⏳ Frame-accurate video export (H.264, HEVC)
-- ⏳ Dark/light mode support
-- ⏳ Preset/template system
-
-## License
-
-(To be determined)
+Active development. Expect ongoing changes to the UI, export pipeline, and plugin system.
 
 ## Contributing
 
-This project follows a phased development approach. Each phase is independently testable before proceeding. See TODO.md for current development priorities.
+Issues and draft PRs are welcome. Please include a clear description, screenshots where helpful, and sample GPX data when relevant.
+
+## License
+
+TBD.
