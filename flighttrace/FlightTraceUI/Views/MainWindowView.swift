@@ -85,7 +85,7 @@ public struct MainWindowView: View {
                             gpxLoadSuccess = nil
                         }
                     })
-                        .frame(height: 200)
+                        .frame(height: 260)
                         .background(Color(nsColor: .controlBackgroundColor))
 
                     Divider()
@@ -582,4 +582,3 @@ public enum PluginRegistration {
         }
     }
 }
-
