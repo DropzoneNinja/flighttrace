@@ -1,0 +1,33 @@
+# macOS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.xcuserstate
+xcuserdata/
+
+# SwiftPM
+.build/
+.swiftpm/
+
+# Logs
+*.log
+
+# Vim/Emacs
+*~
+*.swp
+*.swo
+
+# Local data
+Raw/
+GPX Files/
+
+# Xcode user data
+*.xcuserstate
+xcuserdata/
+
