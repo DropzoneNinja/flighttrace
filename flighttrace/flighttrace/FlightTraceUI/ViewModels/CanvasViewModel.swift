@@ -281,6 +281,34 @@ public final class CanvasViewModel {
         resizeMode = false
     }
 
+    /// Nudge the selected instrument by a delta (in canvas points).
+    public func nudgeSelectedInstrument(by delta: CGSize) {
+        guard let selectedID = selectedInstrumentID else {
+            return
+        }
+
+        guard let instrument = instruments.first(where: { $0.id == selectedID }) else {
+            return
+        }
+
+        let desiredPosition = CGPoint(
+            x: instrument.position.x + delta.width,
+            y: instrument.position.y + delta.height
+        )
+
+        let snapResult = calculateSnapPosition(for: selectedID, desiredPosition: desiredPosition)
+
+        updateInstrument(id: selectedID) { instrument in
+            instrument.position = snapResult.position
+        }
+
+        updateSnapGuides(snapResult.guides)
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { [weak self] in
+            self?.clearSnapGuides()
+        }
+    }
+
     /// Find instrument at a specific point
     /// - Parameter point: The point to test
     /// - Returns: The topmost instrument at that point, or nil
@@ -384,7 +412,8 @@ public final class CanvasViewModel {
             position: desiredPosition,
             size: instrument.size,
             canvasSize: canvasSize,
-            otherInstruments: otherInstruments
+            otherInstruments: otherInstruments,
+            includeGridGuides: showSafeAreaGuides
         )
 
         return (result.snappedPosition, result.activeGuides)

@@ -500,6 +500,32 @@ public struct FlightTraceCommands: Commands {
             }
             .keyboardShortcut("[", modifiers: [.command, .option])
             .disabled(viewModel?.selectedInstrumentID == nil)
+
+            Divider()
+
+            Button("Nudge Up") {
+                viewModel?.nudgeSelectedInstrument(by: CGSize(width: 0, height: -1))
+            }
+            .keyboardShortcut(.upArrow, modifiers: [])
+            .disabled(viewModel?.selectedInstrumentID == nil)
+
+            Button("Nudge Down") {
+                viewModel?.nudgeSelectedInstrument(by: CGSize(width: 0, height: 1))
+            }
+            .keyboardShortcut(.downArrow, modifiers: [])
+            .disabled(viewModel?.selectedInstrumentID == nil)
+
+            Button("Nudge Left") {
+                viewModel?.nudgeSelectedInstrument(by: CGSize(width: -1, height: 0))
+            }
+            .keyboardShortcut(.leftArrow, modifiers: [])
+            .disabled(viewModel?.selectedInstrumentID == nil)
+
+            Button("Nudge Right") {
+                viewModel?.nudgeSelectedInstrument(by: CGSize(width: 1, height: 0))
+            }
+            .keyboardShortcut(.rightArrow, modifiers: [])
+            .disabled(viewModel?.selectedInstrumentID == nil)
         }
 
         // Window menu (preferences)

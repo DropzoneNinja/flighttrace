@@ -90,7 +90,8 @@ public final class SnapGuideEngine {
         position: CGPoint,
         size: CGSize,
         canvasSize: CGSize,
-        otherInstruments: [(position: CGPoint, size: CGSize)] = []
+        otherInstruments: [(position: CGPoint, size: CGSize)] = [],
+        includeGridGuides: Bool = true
     ) -> SnapResult {
         var snappedX = position.x
         var snappedY = position.y
@@ -155,66 +156,147 @@ public final class SnapGuideEngine {
         }
 
         // MARK: Canvas Center Snapping
+        if includeGridGuides {
+            let canvasCenterX = canvasSize.width / 2
+            let canvasCenterY = canvasSize.height / 2
 
-        let canvasCenterX = canvasSize.width / 2
-        let canvasCenterY = canvasSize.height / 2
-
-        // Horizontal center
-        if abs(centerX - canvasCenterX) < snapThreshold {
-            snappedX = canvasCenterX - size.width / 2
-            didSnapX = true
-            activeGuides.append(SnapGuide(
-                type: .center,
-                orientation: .vertical,
-                position: canvasCenterX,
-                range: 0...canvasSize.height
-            ))
-        }
-
-        // Vertical center
-        if abs(centerY - canvasCenterY) < snapThreshold {
-            snappedY = canvasCenterY - size.height / 2
-            didSnapY = true
-            activeGuides.append(SnapGuide(
-                type: .center,
-                orientation: .horizontal,
-                position: canvasCenterY,
-                range: 0...canvasSize.width
-            ))
-        }
-
-        // MARK: Rule of Thirds Snapping
-
-        let thirdWidth = canvasSize.width / 3
-        let thirdHeight = canvasSize.height / 3
-
-        // Vertical thirds (1/3 and 2/3)
-        for i in 1...2 {
-            let thirdX = thirdWidth * CGFloat(i)
-            if abs(centerX - thirdX) < snapThreshold {
-                snappedX = thirdX - size.width / 2
+            // Horizontal center (align center, left, right)
+            if abs(centerX - canvasCenterX) < snapThreshold {
+                snappedX = canvasCenterX - size.width / 2
                 didSnapX = true
                 activeGuides.append(SnapGuide(
-                    type: .ruleOfThirds,
+                    type: .center,
                     orientation: .vertical,
-                    position: thirdX,
+                    position: canvasCenterX,
                     range: 0...canvasSize.height
                 ))
             }
-        }
+            if !didSnapX && abs(position.x - canvasCenterX) < snapThreshold {
+                snappedX = canvasCenterX
+                didSnapX = true
+                activeGuides.append(SnapGuide(
+                    type: .center,
+                    orientation: .vertical,
+                    position: canvasCenterX,
+                    range: 0...canvasSize.height
+                ))
+            }
+            if !didSnapX && abs(right - canvasCenterX) < snapThreshold {
+                snappedX = canvasCenterX - size.width
+                didSnapX = true
+                activeGuides.append(SnapGuide(
+                    type: .center,
+                    orientation: .vertical,
+                    position: canvasCenterX,
+                    range: 0...canvasSize.height
+                ))
+            }
 
-        // Horizontal thirds (1/3 and 2/3)
-        for i in 1...2 {
-            let thirdY = thirdHeight * CGFloat(i)
-            if abs(centerY - thirdY) < snapThreshold {
-                snappedY = thirdY - size.height / 2
+            // Vertical center (align center, top, bottom)
+            if abs(centerY - canvasCenterY) < snapThreshold {
+                snappedY = canvasCenterY - size.height / 2
                 didSnapY = true
                 activeGuides.append(SnapGuide(
-                    type: .ruleOfThirds,
+                    type: .center,
                     orientation: .horizontal,
-                    position: thirdY,
+                    position: canvasCenterY,
                     range: 0...canvasSize.width
                 ))
+            }
+            if !didSnapY && abs(position.y - canvasCenterY) < snapThreshold {
+                snappedY = canvasCenterY
+                didSnapY = true
+                activeGuides.append(SnapGuide(
+                    type: .center,
+                    orientation: .horizontal,
+                    position: canvasCenterY,
+                    range: 0...canvasSize.width
+                ))
+            }
+            if !didSnapY && abs(bottom - canvasCenterY) < snapThreshold {
+                snappedY = canvasCenterY - size.height
+                didSnapY = true
+                activeGuides.append(SnapGuide(
+                    type: .center,
+                    orientation: .horizontal,
+                    position: canvasCenterY,
+                    range: 0...canvasSize.width
+                ))
+            }
+
+            // MARK: Rule of Thirds Snapping
+
+            let thirdWidth = canvasSize.width / 3
+            let thirdHeight = canvasSize.height / 3
+
+            // Vertical thirds (1/3 and 2/3) align center, left, right
+            for i in 1...2 {
+                let thirdX = thirdWidth * CGFloat(i)
+                if abs(centerX - thirdX) < snapThreshold {
+                    snappedX = thirdX - size.width / 2
+                    didSnapX = true
+                    activeGuides.append(SnapGuide(
+                        type: .ruleOfThirds,
+                        orientation: .vertical,
+                        position: thirdX,
+                        range: 0...canvasSize.height
+                    ))
+                }
+                if !didSnapX && abs(position.x - thirdX) < snapThreshold {
+                    snappedX = thirdX
+                    didSnapX = true
+                    activeGuides.append(SnapGuide(
+                        type: .ruleOfThirds,
+                        orientation: .vertical,
+                        position: thirdX,
+                        range: 0...canvasSize.height
+                    ))
+                }
+                if !didSnapX && abs(right - thirdX) < snapThreshold {
+                    snappedX = thirdX - size.width
+                    didSnapX = true
+                    activeGuides.append(SnapGuide(
+                        type: .ruleOfThirds,
+                        orientation: .vertical,
+                        position: thirdX,
+                        range: 0...canvasSize.height
+                    ))
+                }
+            }
+
+            // Horizontal thirds (1/3 and 2/3) align center, top, bottom
+            for i in 1...2 {
+                let thirdY = thirdHeight * CGFloat(i)
+                if abs(centerY - thirdY) < snapThreshold {
+                    snappedY = thirdY - size.height / 2
+                    didSnapY = true
+                    activeGuides.append(SnapGuide(
+                        type: .ruleOfThirds,
+                        orientation: .horizontal,
+                        position: thirdY,
+                        range: 0...canvasSize.width
+                    ))
+                }
+                if !didSnapY && abs(position.y - thirdY) < snapThreshold {
+                    snappedY = thirdY
+                    didSnapY = true
+                    activeGuides.append(SnapGuide(
+                        type: .ruleOfThirds,
+                        orientation: .horizontal,
+                        position: thirdY,
+                        range: 0...canvasSize.width
+                    ))
+                }
+                if !didSnapY && abs(bottom - thirdY) < snapThreshold {
+                    snappedY = thirdY - size.height
+                    didSnapY = true
+                    activeGuides.append(SnapGuide(
+                        type: .ruleOfThirds,
+                        orientation: .horizontal,
+                        position: thirdY,
+                        range: 0...canvasSize.width
+                    ))
+                }
             }
         }
 

@@ -65,6 +65,13 @@ public struct OverlayCanvasView: View {
                     )
                 }
 
+                // Snap guides (active during drag)
+                SnapGuidesView(
+                    guides: viewModel.activeSnapGuides,
+                    canvasSize: viewModel.canvasSize,
+                    showStaticGuides: false
+                )
+
                 // Instruments layer
                 ForEach(viewModel.sortedInstruments) { instrument in
                     instrumentView(for: instrument)
@@ -197,8 +204,17 @@ public struct OverlayCanvasView: View {
             }
         }
 
-        // Store the cumulative translation
-        currentDragTranslation = value.translation
+        // Snap to guides
+        let desiredPosition = CGPoint(
+            x: dragOriginalPosition.x + value.translation.width,
+            y: dragOriginalPosition.y + value.translation.height
+        )
+        let snapResult = viewModel.calculateSnapPosition(for: instrumentID, desiredPosition: desiredPosition)
+        currentDragTranslation = CGSize(
+            width: snapResult.position.x - dragOriginalPosition.x,
+            height: snapResult.position.y - dragOriginalPosition.y
+        )
+        viewModel.updateSnapGuides(snapResult.guides)
     }
 
     private func handleDragChanged(instrumentID: UUID, translation: CGSize) {
@@ -213,8 +229,17 @@ public struct OverlayCanvasView: View {
             }
         }
 
-        // Store the cumulative translation
-        currentDragTranslation = translation
+        // Snap to guides
+        let desiredPosition = CGPoint(
+            x: dragOriginalPosition.x + translation.width,
+            y: dragOriginalPosition.y + translation.height
+        )
+        let snapResult = viewModel.calculateSnapPosition(for: instrumentID, desiredPosition: desiredPosition)
+        currentDragTranslation = CGSize(
+            width: snapResult.position.x - dragOriginalPosition.x,
+            height: snapResult.position.y - dragOriginalPosition.y
+        )
+        viewModel.updateSnapGuides(snapResult.guides)
     }
 
     private func handleDragEnded(instrumentID: UUID, value: DragGesture.Value) {
@@ -233,6 +258,7 @@ public struct OverlayCanvasView: View {
         draggedInstrumentID = nil
         dragOriginalPosition = .zero
         currentDragTranslation = .zero
+        viewModel.clearSnapGuides()
     }
 
     private func handleDragEnded(instrumentID: UUID, translation: CGSize) {
@@ -251,6 +277,7 @@ public struct OverlayCanvasView: View {
         draggedInstrumentID = nil
         dragOriginalPosition = .zero
         currentDragTranslation = .zero
+        viewModel.clearSnapGuides()
     }
 
     // MARK: - Helper Methods
