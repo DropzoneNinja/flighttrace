@@ -117,18 +117,16 @@ public struct OverlayCanvasView: View {
                 x: displayPosition.x + instrument.size.width / 2,
                 y: displayPosition.y + instrument.size.height / 2
             )
-            .if(!(isSelected && viewModel.resizeMode)) { view in
-                // Only enable drag when NOT in resize mode with this instrument selected
-                view.gesture(
-                    DragGesture(minimumDistance: 1)
-                        .onChanged { value in
-                            handleDragChanged(instrumentID: instrument.id, value: value)
-                        }
-                        .onEnded { value in
-                            handleDragEnded(instrumentID: instrument.id, value: value)
-                        }
-                )
-            }
+            // Always allow dragging the instrument, even when resize handles are visible
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 1)
+                    .onChanged { value in
+                        handleDragChanged(instrumentID: instrument.id, value: value)
+                    }
+                    .onEnded { value in
+                        handleDragEnded(instrumentID: instrument.id, value: value)
+                    }
+            )
             .onTapGesture {
                 viewModel.selectInstrument(id: instrument.id)
             }
@@ -146,6 +144,7 @@ public struct OverlayCanvasView: View {
                     onDrag: nil,
                     onDragEnded: nil
                 )
+                .allowsHitTesting(true)
                 .rotationEffect(.degrees(instrument.rotation), anchor: .center)
                 .position(
                     x: displayPosition.x + instrument.size.width / 2,
@@ -193,10 +192,29 @@ public struct OverlayCanvasView: View {
             if let instrument = viewModel.instruments.first(where: { $0.id == instrumentID }) {
                 dragOriginalPosition = instrument.position
             }
+            if viewModel.resizeMode {
+                viewModel.resizeMode = false
+            }
         }
 
         // Store the cumulative translation
         currentDragTranslation = value.translation
+    }
+
+    private func handleDragChanged(instrumentID: UUID, translation: CGSize) {
+        // On first drag event, store the original position
+        if draggedInstrumentID != instrumentID {
+            draggedInstrumentID = instrumentID
+            if let instrument = viewModel.instruments.first(where: { $0.id == instrumentID }) {
+                dragOriginalPosition = instrument.position
+            }
+            if viewModel.resizeMode {
+                viewModel.resizeMode = false
+            }
+        }
+
+        // Store the cumulative translation
+        currentDragTranslation = translation
     }
 
     private func handleDragEnded(instrumentID: UUID, value: DragGesture.Value) {
@@ -204,6 +222,24 @@ public struct OverlayCanvasView: View {
         let finalPosition = CGPoint(
             x: dragOriginalPosition.x + value.translation.width,
             y: dragOriginalPosition.y + value.translation.height
+        )
+
+        // Update instrument position
+        viewModel.updateInstrument(id: instrumentID) { instrument in
+            instrument.position = finalPosition
+        }
+
+        // Reset drag state
+        draggedInstrumentID = nil
+        dragOriginalPosition = .zero
+        currentDragTranslation = .zero
+    }
+
+    private func handleDragEnded(instrumentID: UUID, translation: CGSize) {
+        // Calculate final position
+        let finalPosition = CGPoint(
+            x: dragOriginalPosition.x + translation.width,
+            y: dragOriginalPosition.y + translation.height
         )
 
         // Update instrument position

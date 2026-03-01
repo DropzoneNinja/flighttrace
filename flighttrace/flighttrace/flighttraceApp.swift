@@ -20,7 +20,7 @@ struct FlightTraceApp: App {
             ContentView()
                 .onAppear {
                     #if canImport(AppKit)
-                    let bid = Bundle.main.bundleIdentifier ?? "nil"
+                    // let bid = Bundle.main.bundleIdentifier ?? "nil"
                     // print("[App] WindowGroup.onAppear: bundleId=\(bid) isActive=\(NSApp.isActive) windows=\(NSApp.windows.count) key=\(NSApp.keyWindow?.title ?? "nil")")
                     NSApp.setActivationPolicy(.regular)
                     if let window = NSApp.keyWindow ?? NSApp.mainWindow ?? NSApp.windows.first {
